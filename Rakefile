@@ -37,7 +37,7 @@ rescue LoadError
   end
 end
 
-task :default => :examples
+task :default => [:features, :examples]
 
 require 'rake/rdoctask'
 Rake::RDocTask.new do |rdoc|
