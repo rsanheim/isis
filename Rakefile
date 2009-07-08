@@ -17,7 +17,7 @@ rescue LoadError
 end
 
 require 'micronaut/rake_task'
-Micronaut::RakeTask.new(examples) do |examples|
+Micronaut::RakeTask.new(:examples) do |examples|
   examples.pattern = 'examples/**/*_example.rb'
   examples.ruby_opts << '-Ilib -Iexamples'
 end
