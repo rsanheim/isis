@@ -26,12 +26,13 @@ module Isis
   class Runner
     
     def self.run
-      runner = new
+      runner = new(ARGV[1..-1])
       runner.send(ARGV[0]) if ARGV[0]
       exit 0
     end
     
-    def initialize
+    def initialize(args)
+      STDERR.puts args
     end
     
     def list
