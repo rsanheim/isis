@@ -43,8 +43,15 @@ describe Isis do
         Isis::Runner.run.should be_instance_of(Isis::Runner)
       end
       
-      it "should load config file" do
+    end
+    
+    describe "all git repos" do
+      
+      it "should return all git repos that exist one level down in project roots" do
+        runner = Isis::Runner.new
+        runner.all_git_repos.should == ["/src/foo"]
       end
+      
     end
       
     describe "fetch all" do
