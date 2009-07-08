@@ -1,0 +1,5 @@
+project_roots: 
+ - ~/src/oss
+ - ~/src/priv/relevance
+user_project_roots: ~/src/priv/relevance, ~/src/priv/rsanheim
+
