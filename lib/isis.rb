@@ -27,6 +27,7 @@ module Isis
     
     def self.run
       new
+      exit 0
     end
     
     def initialize
