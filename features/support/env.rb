@@ -6,11 +6,7 @@ require File.join(File.dirname(__FILE__), *%w[ruby_forker])
 require 'micronaut/expectations'
 
 module CucumberHelpers
-
   include RubyForker
-
-  extend Forwardable
-  # def_delegators RspecWorld, :working_dir, :spec_command, :cmdline_file, :rspec_lib
 
   def working_dir
     @working_dir ||= File.expand_path(File.join(File.dirname(__FILE__), "/../../tmp/cucumber-generated-files"))
