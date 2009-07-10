@@ -74,10 +74,18 @@ describe Isis::Runner do
   end
   
   describe "git repo?" do
-    
+
+    attr_reader :runner
+    before { @runner = Isis::Runner.new }
+
     it "should be false if not a directory" do
-      
-      
+      path = stub(:directory? => false)
+      runner.git_repo?(path).should be_false
+    end
+    
+    it "should be false if there is no .git dir contained in the directory" do
+      path = stub(:directory? => true, :entries => [stub(:to_s => "foo"), stub(:to_s => "bar")])
+      runner.git_repo?(path).should be_false
     end
   
   end

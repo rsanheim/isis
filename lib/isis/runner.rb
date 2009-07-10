@@ -42,7 +42,7 @@ module Isis
     
     def git_repo?(path)
       return false unless path.directory?
-      true
+      !! path.entries.detect { |p| p.to_s == ".git" }
     end
   end
 
