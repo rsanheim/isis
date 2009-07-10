@@ -5,26 +5,13 @@ Feature: Listing all git repos
   I want to list all the git repos Isis knows about
 
   Scenario: no config file
-    Given a file named "custom_formatter.rb" with:
-      """
-      require 'spec/runner/formatter/base_formatter'
-      class CustomFormatter < Spec::Runner::Formatter::BaseFormatter
-        def initialize(options, output)
-          @output = output
-        end
-        def example_started(proxy)
-          @output << "example: " << proxy.description
-        end
-      end
-      """
-    And a file named "simple_example_spec.rb" with:
-    """
-      describe "my group" do
-        specify "my example" do
-        end
-      end
-    """
+    Given a directory named "src/janedoe"
+      And a directory named "src/janedoe/non-git-dir"
+      And a git repo at "src/janedoe/foo"
+      And a git repo at "src/janedoe/bar"
+      And a git repo at "src/janedoe/baz"
 
-    When I run "isis list --project_roots src/janedoe"
+    When I run "isis list --project_roots=src/janedoe"
     Then the exit code should be 0
-    And the stdout should match "3 git repos I know about: foo, bar baz"
+    And the stdout should match "Known git repos: bar, baz, foo"
+    And the stdout should not match "non-git-dir"

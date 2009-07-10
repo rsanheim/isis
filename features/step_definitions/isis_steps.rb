@@ -1,3 +1,11 @@
+Given /^a directory named "([^\"]*)"$/ do |dir_name|
+  create_directory(dir_name)
+end
+
+Given /^a git repo at "([^\"]*)"$/ do |path|
+  create_git_repo(path)
+end
+
 Given %r{^a file named "([^"]+)" with:$} do |file_name, code|
   create_file(file_name, code)
 end

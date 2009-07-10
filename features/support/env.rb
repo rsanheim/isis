@@ -1,15 +1,18 @@
 $LOAD_PATH.unshift(File.dirname(__FILE__) + '/../../lib')
 require 'isis'
 require 'tempfile'
-require File.join(File.dirname(__FILE__), *%w[ruby_forker])
+require 'pathname'
+require 'spec/expectations'
 
-require 'micronaut/expectations'
+require File.join(File.dirname(__FILE__), *%w[ruby_forker])
+require File.join(File.dirname(__FILE__), *%w[smart_match])
+
 
 module CucumberHelpers
   include RubyForker
 
   def working_dir
-    @working_dir ||= File.expand_path(File.join(File.dirname(__FILE__), "/../../tmp/cucumber-generated-files"))
+    @working_dir ||= File.expand_path(File.join(File.dirname(__FILE__), "/../../tmp/working_dir_for_cucumber"))
   end
 
   def spec_command
@@ -36,7 +39,18 @@ module CucumberHelpers
     file_path = File.join(working_dir, file_name)
     File.open(file_path, "w") { |f| f << contents }
   end
+  
+  def create_directory(dir_name)
+    dir_path = File.join(working_dir, dir_name)
+    FileUtils.mkdir_p dir_path
+  end
 
+  def create_git_repo(path)
+    git_path = Pathname.new(working_dir).join(path)
+    git_path.mkdir
+    git_path.join(".git").mkdir
+  end
+  
   def last_stdout
     @stdout
   end
@@ -64,9 +78,8 @@ module CucumberHelpers
 
 end
 
-World(Micronaut::Matchers)
+# World(Micronaut::Matchers)
 World(CucumberHelpers)
-
 
 Before do
   FileUtils.rm_rf   CucumberHelpers.working_dir if test ?d, CucumberHelpers.working_dir
