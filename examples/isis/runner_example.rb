@@ -83,9 +83,22 @@ describe Isis::Runner do
       runner.git_repo?(path).should be_false
     end
     
-    it "should be false if there is no .git dir contained in the directory" do
-      path = stub(:directory? => true, :entries => [stub(:to_s => "foo"), stub(:to_s => "bar")])
+    it "should be false if there is no .git entry" do
+      children = [stub(:basename => stub(:to_s => "foo")), stub(:basename => stub(:to_s => "bar"))]
+      path = stub(:directory? => true, :children => children)
       runner.git_repo?(path).should be_false
+    end
+    
+    it "should be false if there is a .git file (but not a directory)" do
+      children = [stub(:directory? => false, :basename => stub(:to_s => ".git")), stub(:basename => stub(:to_s => "bar"))]
+      path = stub(:directory? => true, :children => children)
+      runner.git_repo?(path).should be_false
+    end
+    
+    it "should be true if there is a .git directory" do
+      children = [stub(:directory? => true, :basename => stub(:to_s => ".git")), stub(:basename => stub(:to_s => "bar"))]
+      path = stub(:directory? => true, :children => children)
+      runner.git_repo?(path).should be_true
     end
   
   end

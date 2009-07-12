@@ -11,7 +11,7 @@ Given %r{^a file named "([^"]+)" with:$} do |file_name, code|
 end
 
 When %r{^I run "isis ([^"]+)"$} do |file_and_args|
-  spec(file_and_args)
+  isis(file_and_args)
 end
 
 Then /^the (.*) should match (.*)$/ do |stream, string_or_regex|

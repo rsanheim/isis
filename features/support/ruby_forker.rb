@@ -6,7 +6,7 @@ module RubyForker
   def ruby(args, stderr=nil)
     config       = ::Config::CONFIG
     interpreter  = File::join(config['bindir'], config['ruby_install_name']) + config['EXEEXT']
-    cmd = "#{interpreter} #{args}"
+    cmd = "HOME=#{working_dir} #{interpreter} #{args}"
     cmd << " 2> #{stderr}" unless stderr.nil?
     `#{cmd}`
   end

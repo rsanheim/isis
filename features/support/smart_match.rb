@@ -9,4 +9,9 @@ Spec::Matchers.define :smart_match do |expected|
       false
     end
   end
+  
+  failure_message_for_should do |actual|
+    "expected #{expected} to smart match the actual:\n\n#{actual}\n"
+  end
+  
 end

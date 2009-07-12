@@ -15,3 +15,20 @@ Feature: Listing all git repos
     Then the exit code should be 0
     And the stdout should match "Known git repos: bar, baz, foo"
     And the stdout should not match "non-git-dir"
+
+  Scenario: config file
+    Given a file named ".isis.yml" with:
+      """
+project_roots: 
+ - src/janedoe
+      """
+      And a directory named "src/janedoe"
+      And a directory named "src/janedoe/non-git-dir"
+      And a git repo at "src/janedoe/foo"
+      And a git repo at "src/janedoe/bar"
+      And a git repo at "src/janedoe/baz"
+
+    When I run "isis list"
+    Then the exit code should be 0 PENDING
+    And the stdout should match "Known git repos: bar, baz, foo"
+    And the stdout should not match "non-git-dir"

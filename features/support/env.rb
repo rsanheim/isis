@@ -2,6 +2,7 @@ $LOAD_PATH.unshift(File.dirname(__FILE__) + '/../../lib')
 require 'isis'
 require 'tempfile'
 require 'pathname'
+
 require 'spec/expectations'
 
 require File.join(File.dirname(__FILE__), *%w[ruby_forker])
@@ -15,7 +16,7 @@ module CucumberHelpers
     @working_dir ||= File.expand_path(File.join(File.dirname(__FILE__), "/../../tmp/working_dir_for_cucumber"))
   end
 
-  def spec_command
+  def isis_command
     @spec_command ||= File.expand_path(File.join(File.dirname(__FILE__), "/../../bin/isis"))
   end
 
@@ -27,8 +28,8 @@ module CucumberHelpers
     @rspec_lib ||= File.join(working_dir, "/../../lib")
   end
 
-  def spec(args)
-    ruby("#{spec_command} #{args}")
+  def isis(args)
+    ruby("#{isis_command} #{args}")
   end
 
   def cmdline(args)
