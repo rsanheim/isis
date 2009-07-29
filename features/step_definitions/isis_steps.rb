@@ -11,6 +11,7 @@ Given %r{^a file named "([^"]+)" with:$} do |file_name, code|
 end
 
 When %r{^I run "isis ([^"]+)"$} do |file_and_args|
+  Isis.logger.debug "Running 'isis #{file_and_args}'"
   isis(file_and_args)
 end
 

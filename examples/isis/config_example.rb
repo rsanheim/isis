@@ -10,7 +10,7 @@ describe Isis::Config do
   describe "project roots" do
     
     it "should combine project root arrays" do
-      Isis::Config.any_instance.stubs(:config_from_yaml).returns({"project_roots" => ["foo", "bar"]})
+      Isis::Config.any_instance.stubs(:config_from_yaml).returns({:project_roots => ["foo", "bar"]})
       config = Isis::Config.new(:project_roots => ["/src", "/things"])
       config.project_roots.should == %w[/src /things bar foo]
     end
@@ -22,6 +22,12 @@ describe Isis::Config do
   end
   
   describe "config from yaml" do
+
+    it "should symbolize keys" do
+      Pathname.any_instance.stubs(:exist?).returns(true)
+      YAML.stubs(:load_file).with(anything).returns({"project_roots" => ["foo", "bar"]})
+      Isis::Config.new.config_from_yaml.should == {:project_roots => ["foo", "bar"]}
+    end
     
     it "should load config from yaml if the config exists" do
       Pathname.any_instance.expects(:exist?).returns(true)

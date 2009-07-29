@@ -24,5 +24,6 @@ module Isis
 end  
 
 require 'isis/array_extensions'
+require 'isis/hash_extensions'
 require 'isis/config'
 require 'isis/runner'

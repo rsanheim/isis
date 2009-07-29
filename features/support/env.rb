@@ -66,7 +66,7 @@ module CucumberHelpers
 
   # it seems like this, and the last_* methods, could be moved into RubyForker-- is that being used anywhere but the features?
   def ruby(args)
-    stderr_file = Tempfile.new('rspec')
+    stderr_file = Tempfile.new('isis')
     stderr_file.close
     Dir.chdir(working_dir) do
       @stdout = super("-I #{rspec_lib} #{args}", stderr_file.path)

@@ -21,14 +21,24 @@ module Isis
   
     def list(options = {}, args = [])
       Isis.logger.debug options
-      root = options[:project_roots] || raise(ArgumentError, "No project roots found")
-      root_path = Pathname.new(root)
-      raise(ArgumentError, "Project root #{root_path} is not a directory") unless root_path.directory?
+      root_paths = get_project_roots(options)
       repos = []
-      root_path.children.each do |path|
-        repos << path.basename if git_repo?(path)
+      root_paths.each do |root_path|
+        root_path.children.each do |path|
+          repos << path.basename if git_repo?(path)
+        end
       end
       puts "Known git repos: #{repos.sort.join(", ")}"
+    end
+    
+    def get_project_roots(options)
+      project_roots = options[:project_roots] || raise(ArgumentError, "No project roots found")
+      project_root_pathnames = project_roots.map do |path| 
+        # TODO refactor with returning?
+        pathname = Pathname.new(path) 
+        raise(ArgumentError, "Project root #{path} is not a directory") unless pathname.directory?
+        pathname
+      end
     end
     
     def fetch_all

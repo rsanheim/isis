@@ -29,6 +29,6 @@ project_roots:
       And a git repo at "src/janedoe/baz"
 
     When I run "isis list"
-    Then the exit code should be 0 PENDING
+    Then the exit code should be 0
     And the stdout should match "Known git repos: bar, baz, foo"
     And the stdout should not match "non-git-dir"
