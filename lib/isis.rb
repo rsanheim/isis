@@ -17,10 +17,6 @@ module Isis
     File.directory?(File.join(path, ".git"))
   end
   
-  def all_git_repos
-    
-  end
-  
 end  
 
 require 'isis/array_extensions'
