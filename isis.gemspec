@@ -2,7 +2,7 @@
 
 Gem::Specification.new do |s|
   s.name = %q{isis}
-  s.version = "0.0.0"
+  s.version = "0.0.1"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Rob Sanheim"]
@@ -33,12 +33,14 @@ Gem::Specification.new do |s|
      "features/support/ruby_forker.rb",
      "features/support/smart_match.rb",
      "fixtures/config_01",
+     "isis.gemspec",
      "lib/isis.rb",
      "lib/isis/array_extensions.rb",
      "lib/isis/command.rb",
      "lib/isis/config.rb",
      "lib/isis/hash_extensions.rb",
-     "lib/isis/runner.rb"
+     "lib/isis/runner.rb",
+     "version.yml"
   ]
   s.homepage = %q{http://github.com/rsanheim/isis}
   s.rdoc_options = ["--charset=UTF-8"]

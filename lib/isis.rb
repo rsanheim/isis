@@ -5,8 +5,15 @@ LogBuddy.init
 
 module Isis
   
+  TMP_DIR = Pathname.new(__FILE__).dirname.join("..", "tmp").expand_path
+
   def self.logger
-    @logger ||= Logger.new(File.join(File.dirname(__FILE__), *%w[.. tmp isis.log]))
+    @logger || @logger = init_logger
+  end
+  
+  def self.init_logger
+    TMP_DIR.mkdir unless TMP_DIR.exist?
+    Logger.new(TMP_DIR.join("isis.log"))
   end
   
   def self.config

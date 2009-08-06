@@ -41,8 +41,8 @@ task :default => [:features, :examples]
 
 require 'rake/rdoctask'
 Rake::RDocTask.new do |rdoc|
-  if File.exist?('VERSION.yml')
-    config = YAML.load(File.read('VERSION.yml'))
+  if File.exist?('version.yml')
+    config = YAML.load(File.read('version.yml'))
     version = "#{config[:major]}.#{config[:minor]}.#{config[:patch]}"
   else
     version = ""
