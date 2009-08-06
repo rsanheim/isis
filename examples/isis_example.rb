@@ -11,6 +11,10 @@ describe Isis do
       Isis.config.should be_instance_of(Isis::Config)
     end
     
+    it "has top level root" do
+      Isis.root_path.should == Pathname.new(ENV["HOME"]).join(".isis")
+    end
+    
     describe "with real config file" do
 
       def config_01
