@@ -2,6 +2,7 @@ $LOAD_PATH.unshift(File.dirname(__FILE__) + '/../../lib')
 require 'isis'
 require 'tempfile'
 require 'pathname'
+require 'tmpdir'
 
 require 'spec/expectations'
 
@@ -13,7 +14,7 @@ module CucumberHelpers
   include RubyForker
 
   def working_dir
-    @working_dir ||= File.expand_path(File.join(File.dirname(__FILE__), "/../../tmp/working_dir_for_cucumber"))
+    @working_dir ||= Pathname.new(Dir::tmpdir).join("working_dir_for_cucumber")
   end
 
   def isis_command
@@ -49,7 +50,12 @@ module CucumberHelpers
   def create_git_repo(path)
     git_path = Pathname.new(working_dir).join(path)
     git_path.mkdir
-    git_path.join(".git").mkdir
+    dot_git_dir = git_path.join(".git").expand_path
+    system! "git --git-dir=#{dot_git_dir} init --quiet"
+  end
+  
+  def system!(cmd)
+    system(cmd) || raise("Error executing '#{cmd}'")
   end
   
   def last_stdout

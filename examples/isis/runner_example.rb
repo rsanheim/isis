@@ -33,7 +33,7 @@ describe Isis::Runner do
     end
   end
   
-  describe "list" do
+  describe "list", :full_backtrace => true do
     
     pending "lists all git repos Isis knows about" do
       runner = Isis::Runner.new

@@ -31,9 +31,23 @@ module Isis
       puts "Known git repos: #{repos.sort.join(", ")}"
     end
     
+    def status(options = {}, args = [])
+      Isis.logger.debug options
+      root_paths = get_project_roots(options)
+      repos = []
+      root_paths.each do |root_path|
+        root_path.children.each do |path|
+          repos << path.basename if git_repo?(path)
+        end
+      end
+      repos.each do |repo|
+        system "git --git-dir#{repo.expand_path} status"
+      end
+    end
+    
     def get_project_roots(options)
       project_roots = options[:project_roots] || raise(ArgumentError, "No project roots found")
-      project_root_pathnames = project_roots.map do |path| 
+      project_root_pathnames = Array(project_roots).map do |path| 
         # TODO refactor with returning?
         pathname = Pathname.new(path) 
         raise(ArgumentError, "Project root #{path} is not a directory") unless pathname.directory?
