@@ -33,7 +33,7 @@ project_roots:
     And the stdout should match "Known git repos: bar, baz, foo"
     And the stdout should not match "non-git-dir"
 
-
+  @wip
   Scenario: getting status of projects
     Given a directory named "src/janedoe"
       And a directory named "src/janedoe/non-git-dir"
@@ -44,5 +44,7 @@ project_roots:
     When I run "isis status --project_roots=src/janedoe"
     Then the exit code should be 0
     And the stdout should match "Status of git repos: bar, baz, foo"
-    And the stdout should match ""
+    And the stdout should match "bar: [master] clean"
+    And the stdout should match "baz: [master] clean"
+    And the stdout should match "foo: [master] clean"
     And the stdout should not match "non-git-dir"

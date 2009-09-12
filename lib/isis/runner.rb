@@ -42,14 +42,20 @@ module Isis
           repos << path.basename if git_repo?(path)
         end
       end
-      out = "Status of git repos: #{repos.join(", ")}"
+      out = "Status of git repos: #{repos.join(", ")}\n"
       repos.each do |repo|
+        Isis.logger.debug "Getting status of: #{repo.expand_path}"
         cmd = "git --git-dir=#{repo.expand_path} status"
         stdout, stderr = nil, nil
         status = Open4.popen4(cmd) do |_pid, _stdin, _stdout, _stderr|
-          stdout = _stdout
-          stderr = _stderr
+          _stdin.close
+          stdout = _stdout.read.strip
+          
+          stderr = _stderr.read.strip
         end
+        out << "#{repo}: "
+        out << stdout
+        out << stderr
       end
       puts out
     end
