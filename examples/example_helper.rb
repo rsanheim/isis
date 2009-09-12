@@ -1,4 +1,3 @@
-require 'rubygems'
 require 'micronaut'
 require 'mocha'
 require 'log_buddy'

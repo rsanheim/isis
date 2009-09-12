@@ -1,3 +1,5 @@
+require 'open4'
+
 module Isis
   
   class Runner
@@ -40,9 +42,16 @@ module Isis
           repos << path.basename if git_repo?(path)
         end
       end
+      out = "Status of git repos: #{repos.join(", ")}"
       repos.each do |repo|
-        system "git --git-dir#{repo.expand_path} status"
+        cmd = "git --git-dir=#{repo.expand_path} status"
+        stdout, stderr = nil, nil
+        status = Open4.popen4(cmd) do |_pid, _stdin, _stdout, _stderr|
+          stdout = _stdout
+          stderr = _stderr
+        end
       end
+      puts out
     end
     
     def get_project_roots(options)
