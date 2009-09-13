@@ -3,7 +3,6 @@ require File.join(File.dirname(__FILE__), *%w[.. example_helper])
 describe Isis::Runner do
   
   describe "run" do
-    
     it "should return the exit code" do
       Isis::Runner.stubs(:exit).returns(256)
       Isis::Runner.any_instance.stubs(:execute)
@@ -15,11 +14,9 @@ describe Isis::Runner do
       Isis::Runner.any_instance.stubs(:execute)
       Isis::Runner.run
     end
-    
   end
 
   describe "command lookup" do
-    
     it "finds the method matching the command" do
       runner = Isis::Runner.new(["list"])
       runner.expects(:list)
@@ -33,7 +30,17 @@ describe Isis::Runner do
     end
   end
   
-  describe "list", :full_backtrace => true do
+  describe "get git repos" do
+    fit "should return paths that look like git repos" do
+      dot_git = stub(:directory? => true)
+      git_path = stub("git_path", :children => [dot_git])
+      non_git_path = stub("non_git_path", :children => ["readme"])
+      paths = [git_path, non_git_path]
+      Isis::Runner.filter_git_repos(paths).should == [git_path]
+    end
+  end
+  
+  describe "list" do
     
     pending "lists all git repos Isis knows about" do
       runner = Isis::Runner.new

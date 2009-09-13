@@ -9,6 +9,14 @@ module Isis
       runner.execute
       exit 0
     end
+    
+    def self.filter_git_repos(paths)
+      paths.each do |path|
+        path.children.each do |child|
+          repos << child.basename if git_repo?(child)
+        end
+      end
+    end
   
     def initialize(args = [])
       @args = args
@@ -83,6 +91,10 @@ module Isis
     end
     
     def git_repo?(path)
+      self.class.git_repo?(path)
+    end
+    
+    def self.git_repo?(path)
       return false unless path.directory?
       !! path.children.detect do |p| 
         p.basename.to_s == ".git" && p.directory?
